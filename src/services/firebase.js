@@ -4,23 +4,20 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import "firebase/performance";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCYrFIhNo3nctoCQIqE0KIZCavNDo-QmKs",
-  authDomain: "think-piece-ee6b6.firebaseapp.com",
-  databaseURL: "https://think-piece-ee6b6.firebaseio.com",
-  projectId: "think-piece-ee6b6",
-  storageBucket: "think-piece-ee6b6.appspot.com",
-  messagingSenderId: "1003050621641",
-  appId: "1:1003050621641:web:57f4a36b23712a33728b18",
-  measurementId: "G-WMGP37GG60",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  databaseURL: process.env.REACT_APP_databaseURL,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-const perf = firebase.performance();
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 const firestore = firebase.firestore();
@@ -63,12 +60,7 @@ const uiConfig = {
   // We will display Google and Facebook as auth providers.
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 };
-const FirebaseAuth = () => (
-  <StyledFirebaseAuth
-    uiConfig={uiConfig}
-    firebaseAuth={auth}
-  ></StyledFirebaseAuth>
-);
+const FirebaseAuth = () => <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}></StyledFirebaseAuth>;
 window.firebase = firebase;
 
 const createUserProfileDocument = async (user, additionalData) => {

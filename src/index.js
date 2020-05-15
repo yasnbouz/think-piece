@@ -5,6 +5,7 @@ import PostsProvider from "providers/PostsProvider";
 import "index.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import Application from "components/Application";
+console.log(process.env);
 
 render(
   <Router>

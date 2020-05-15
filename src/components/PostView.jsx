@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Post from "./Post";
 import Comments from "./Comments";
-import { firestore, auth } from "services/firebase";
+import { firestore } from "services/firebase";
 import { CollectIdsAndDocs } from "Utilities";
 import { withUser } from "providers/UserProvider";
 
