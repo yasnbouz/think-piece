@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { signUp, createUserProfileDocument } from "services/firebase";
 
 class SignUp extends Component {
-  state = { displayName: '', email: '', password: '' };
+  state = { displayName: "", email: "", password: "" };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
-
     this.setState({ [name]: value });
   };
-
-  handleSubmit = event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-
-    this.setState({ displayName: '', email: '', password: '' });
+    const { email, password, displayName } = this.state;
+    const user = await signUp(email, password);
+    const data = await createUserProfileDocument(user, { displayName });
+    console.log(data);
+    this.setState({ displayName: "", email: "", password: "" });
   };
 
   render() {

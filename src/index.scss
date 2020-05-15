@@ -4,6 +4,27 @@ $info-color: #daedbd;
 $comment-highlight-color: #de6b48;
 $danger-color: #de6b48;
 
+:root {
+  font-size: 10px;
+}
+/* 10px @ 768px increasing to 16px @ 1920px */
+@media (min-width: 768px) {
+  :root {
+    font-size: calc(0.625rem + ((1vw - 7.68px) * 0.5208));
+    /* Note: The base value (0.625rem) must be stated in rem to maintain accessibility */
+    /* Where: 0.5208 = 100 * font-size_Difference / viewport_Width_Difference */
+
+    /* Safari resize fix */
+    min-height: 0vw;
+  }
+}
+/* Prevent scaling beyond this breakpoint */
+@media (min-width: 1920px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
 @mixin button($color) {
   background-color: $color;
   border: 1px solid darken($color, 10);
@@ -20,19 +41,11 @@ html,
 *:before,
 *:after {
   box-sizing: border-box;
-  color: #2d3436;
-}
-
-html,
-body,
-input {
-  font: menu;
 }
 
 input,
 button {
   display: block;
-  width: 100%;
   &:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -40,10 +53,17 @@ button {
     outline: none;
   }
 }
-
-input[type='text'],
-input[type='email'],
-input[type='password'] {
+.AddPost input,
+.AddPost button,
+.SignUp input,
+.SignUp button,
+.SignIn input,
+.SignIn button {
+  width: 100%;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   border: none;
   border-bottom: 1px solid $input-color;
   font-size: 1.5em;
@@ -51,21 +71,25 @@ input[type='password'] {
 }
 
 button,
-input[type='submit'],
+input[type="submit"],
 .button {
   display: block;
-  width: 100%;
   font-size: 1.1em;
   padding: 0.5em;
   @include button($button-color);
-  &.star, &.create, &.update {
+  &.star,
+  &.create,
+  &.update {
     @include button($input-color);
   }
   &.delete {
     @include button($danger-color);
   }
 }
-
+a {
+  text-decoration: none;
+  color: black;
+}
 input[type="file"] {
   margin: 1em 0;
   padding: 1em 0;
@@ -113,13 +137,13 @@ input[type="file"] {
     margin-bottom: 1em;
   }
   .created-at:before {
-    content: 'Joined';
+    content: "Joined";
     color: $comment-highlight-color;
     font-weight: bold;
     margin: 0.5em 0.5em;
   }
   .email:before {
-    content: 'Email';
+    content: "Email";
     color: $comment-highlight-color;
     font-weight: bold;
     margin: 0.5em 0.5em;
@@ -185,13 +209,16 @@ input[type="file"] {
   color: $comment-highlight-color;
   font-weight: bold;
   &:after {
-    content: ': ';
+    content: ": ";
   }
 }
 
 .Comment--timestamp {
   color: darken($info-color, 40);
   &:before {
-    content: ' ';
+    content: " ";
   }
+}
+.grow-font-size {
+  font-size: 1.125rem;
 }

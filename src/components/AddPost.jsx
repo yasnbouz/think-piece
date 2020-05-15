@@ -1,37 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { firestore, auth } from "services/firebase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
+toast.configure();
 
 class AddPost extends Component {
-  state = { title: '', content: '' };
+  state = { title: "", content: "" };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-
-  handleSubmit = event => {
+  create = async (post) => {
+    await firestore.collection("posts").add(post);
+    await toast.success(`${post.user.displayName} add a post`, {
+      bodyClassName: "grow-font-size",
+    });
+  };
+  handleSubmit = (event) => {
     event.preventDefault();
-
-    const { onCreate } = this.props;
     const { title, content } = this.state;
+    const { uid, displayName, email, photoURL } = auth.currentUser || {};
 
     const post = {
-      id: Date.now().toString(),
       title,
       content,
       user: {
-        uid: '1111',
-        displayName: 'Steve Kinney',
-        email: 'steve@mailinator.com',
-        photoURL: 'http://placekitten.com/g/200/200',
+        displayName,
+        email,
+        photoURL,
+        uid,
       },
       favorites: 0,
       comments: 0,
       createdAt: new Date(),
-    }
-
-    onCreate(post);
-
-    this.setState({ title: '', content: '' });
+    };
+    this.create(post);
+    this.setState({ title: "", content: "" });
   };
 
   render() {
