@@ -4,7 +4,6 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import "firebase/performance";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const firebaseConfig = {
@@ -20,7 +19,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-const perf = firebase.performance();
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 const firestore = firebase.firestore();
